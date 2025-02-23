@@ -1,4 +1,4 @@
-module transaction_arguments::example {
+module arguments::example {
     use std::string::{String};
     use aptos_framework::object::{Self, Object, ExtendRef};
     use std::signer;
@@ -7,7 +7,7 @@ module transaction_arguments::example {
     const E_NOT_DEPLOYER: u64 = 0;
 
     #[resource_group_member(group = aptos_framework::object::ObjectGroup)]
-    struct SomeResource<V1: copy + drop + store, V2: copy + drop + store, V3: copy + drop + store> has key {
+    struct SomeResource<V1: copy + drop + store, V2: copy + drop + store, V3: copy + drop + store> has key, store {
         my_bool: bool,
         my_u64: u64,
         my_string: String,
@@ -26,8 +26,8 @@ module transaction_arguments::example {
     }
 
     fun init_module(deployer: &signer) {
-        assert!(signer::address_of(deployer) == @transaction_arguments, E_NOT_DEPLOYER);
-        let constructor_ref = object::create_object(@transaction_arguments);
+        assert!(signer::address_of(deployer) == @arguments, E_NOT_DEPLOYER);
+        let constructor_ref = object::create_object(@arguments);
         let obj_signer = object::generate_signer(&constructor_ref);
         move_to(
             &obj_signer,
@@ -57,11 +57,11 @@ module transaction_arguments::example {
         // we throw these away because we're not using them, just showing how multiple signers would work in the generated code
         let _ = second_signer;
         let _ = third_signer;
-        assert!(signer::address_of(deployer) == @transaction_arguments, E_NOT_DEPLOYER);
+        assert!(signer::address_of(deployer) == @arguments, E_NOT_DEPLOYER);
         // throw this away because we're not using it
         
         // get the object's signer so we can move SomeResource<V1, V2, V3> onto it
-        let obj_addr = borrow_global<ContractData>(@transaction_arguments).obj_addr;
+        let obj_addr = borrow_global<ContractData>(@arguments).obj_addr;
         let extend_ref = &borrow_global<MyExtendRef>(obj_addr).extend_ref;
         let obj_signer = object::generate_signer_for_extending(extend_ref);
         move_to(
@@ -79,7 +79,7 @@ module transaction_arguments::example {
 
     #[view]
     public fun get_obj_address(): address acquires ContractData {
-        borrow_global<ContractData>(@transaction_arguments).obj_addr
+        borrow_global<ContractData>(@arguments).obj_addr
     }
 
     #[view]

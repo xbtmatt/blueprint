@@ -2,7 +2,7 @@ script {
     use std::signer;
     use std::object::{Object};
     use std::string::{String};
-    use transaction_arguments::tx_args_module::{Self, EmptyResource};
+    use arguments::tx_args_module::{Self, EmptyResource};
 
     fun main(
         account_1: &signer,

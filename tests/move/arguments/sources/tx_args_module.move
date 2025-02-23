@@ -1,4 +1,4 @@
-module transaction_arguments::tx_args_module {
+module arguments::tx_args_module {
     use std::string;
     use std::error;
     use std::signer;
@@ -37,7 +37,7 @@ module transaction_arguments::tx_args_module {
     const EXPECTED_U64: u64 = 4;
     const EXPECTED_U128: u128 = 5;
     const EXPECTED_U256: u256 = 6;
-    const EXPECTED_ADDRESS: address = @transaction_arguments;
+    const EXPECTED_ADDRESS: address = @arguments;
     const EXPECTED_STRING: vector<u8> = b"expected_string";
 
     const EXPECTED_VECTOR_BOOL: vector<bool> = vector<bool> [ true, false, true ];
@@ -61,11 +61,11 @@ module transaction_arguments::tx_args_module {
     struct EmptyResource has key { }
 
     fun init_module(deployer: &signer) {
-        assert!(signer::address_of(deployer) == @transaction_arguments, DEPLOYER_MUST_MATCH_MODULE_ADDRESS);
+        assert!(signer::address_of(deployer) == @arguments, DEPLOYER_MUST_MATCH_MODULE_ADDRESS);
         let objs = vector<Object<EmptyResource>> [ ];
         let i = 0;
         while(i < 3) {
-            let constructor_ref = object::create_object(@transaction_arguments);
+            let constructor_ref = object::create_object(@arguments);
             let obj_signer = object::generate_signer(&constructor_ref);
             move_to(
                 &obj_signer,
@@ -676,7 +676,7 @@ module transaction_arguments::tx_args_module {
     }
 
     inline fun get_setup_data(): &SetupData {
-        borrow_global<SetupData>(@transaction_arguments)
+        borrow_global<SetupData>(@arguments)
     }
 
     #[view]
@@ -704,7 +704,7 @@ module transaction_arguments::tx_args_module {
         )
     }
 
-    #[test(deployer=@transaction_arguments, signer_2=@0xa, signer_3=@0xb, signer_4=@0xc, signer_5=@0xd, signer_2_clone=@0xa, signer_4_clone=@0xc, core=@0x1)]
+    #[test(deployer=@arguments, signer_2=@0xa, signer_3=@0xb, signer_4=@0xc, signer_5=@0xd, signer_2_clone=@0xa, signer_4_clone=@0xc, core=@0x1)]
     fun test_all_functions(
         deployer: &signer,
         signer_2: signer,

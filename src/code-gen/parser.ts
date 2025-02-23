@@ -120,7 +120,7 @@ export class CodeGenerator {
     // denote the explicit number of generic TypeTags necessary to call the function
     const explicitTypeTagInputs = createExplicitArraySizeString(
       genericTypeTags.length,
-      "TypeTagInput",
+      "TypeTagInput"
     );
     const explicitTypeTags = !oneOrMoreGenerics
       ? "[] = []"
@@ -141,11 +141,11 @@ export class CodeGenerator {
         moduleName,
         functionName,
         fieldNames,
-        functionArgumentTypeTags.map((t) => t.toString()),
+        functionArgumentTypeTags.map((t) => t.toString())
       );
       throw new Error(
         `fieldNames.length (${fieldNames.length}) ` +
-          `!== functionArgumentsTypeTags.length (${functionArgumentTypeTags.length})`,
+          `!== functionArgumentsTypeTags.length (${functionArgumentTypeTags.length})`
       );
     }
 
@@ -155,7 +155,7 @@ export class CodeGenerator {
     // ----------------------- Handle signers ----------------------- //
     const { signerArguments, functionArguments } = this.getClassArgTypes(
       functionArgumentTypeTags,
-      genericTypeParams,
+      genericTypeParams
     );
 
     // ----------------------- Match generic type tags ----------------------- //
@@ -205,11 +205,11 @@ export class CodeGenerator {
         `*  ${visibility === "public" ? visibility : ""}${viewFunction ? "" : " entry"}` +
           ` fun ${functionName}${leftCaret}${genericTypeTagsString}${rightCaret}(${
             functionArguments.length > 0 ? "" : `)${returnValueAsString}`
-          }`,
+          }`
       );
       signerArguments.forEach((signerArgument, i) => {
         funcSignatureLines.push(
-          `*     ${signerArgumentNamesSnakeCase[i]}: ${signerArgument.annotation},`,
+          `*     ${signerArgumentNamesSnakeCase[i]}: ${signerArgument.annotation},`
         );
       });
       functionArguments.forEach((functionArgument, i) => {
@@ -246,7 +246,7 @@ export class CodeGenerator {
       public readonly moduleAddress${moduleAddressFieldValue};
       public readonly moduleName = "${moduleName}";
       public readonly functionName = "${functionName}";
-      public readonly args: ${functionArguments.length > 0 ? argsType : "{ }"};
+      public readonly args: ${functionArguments.length > 0 ? argsType : "Record<string, never>"};
       public readonly typeTags: ${explicitTypeTags}; ${genericTypeTagsStringAnnotation}\n${
         // Only add senders if it's an entry function.
         viewFunction
@@ -285,7 +285,7 @@ export class CodeGenerator {
       // signers are `AccountAddress` in the constructor signature because
       // we're just building the payload/generating the transaction here.
       constructorSenders.push(
-        `${signerArgumentNames[i]}: ${accountAddressInputString}, // ${signerArgument.annotation}`,
+        `${signerArgumentNames[i]}: ${accountAddressInputString}, // ${signerArgument.annotation}`
       );
     });
     // If this is an entry function and the `signer` isn't included in the entry function args,
@@ -294,7 +294,7 @@ export class CodeGenerator {
       const constructorSendersComment =
         "// Not an entry function argument, but required to submit.";
       constructorSenders.push(
-        `${PRIMARY_SENDER_VAR_NAME}: ${accountAddressInputString}, ${constructorSendersComment}`,
+        `${PRIMARY_SENDER_VAR_NAME}: ${accountAddressInputString}, ${constructorSendersComment}`
       );
     }
     functionArguments.forEach((functionArgument, i) => {
@@ -306,12 +306,12 @@ export class CodeGenerator {
     });
     if (genericTypeTagsString) {
       constructorOtherArgs.push(
-        `typeTags: ${explicitTypeTagInputs}, ${genericTypeTagsStringAnnotation}`,
+        `typeTags: ${explicitTypeTagInputs}, ${genericTypeTagsStringAnnotation}`
       );
     }
     if (!viewFunction) {
       constructorOtherArgs.push(
-        `feePayer?: ${accountAddressInputString}, // Optional fee payer account to pay gas fees.`,
+        `feePayer?: ${accountAddressInputString}, // Optional fee payer account to pay gas fees.`
       );
     }
     lines.push(constructorSenders.join("\n"));
@@ -341,7 +341,7 @@ export class CodeGenerator {
       }
     }
     const signerArgumentNamesAsClasses = signerArgumentNames.map(
-      (signerArgumentName) => `AccountAddress.from(${signerArgumentName})`,
+      (signerArgumentName) => `AccountAddress.from(${signerArgumentName})`
     );
     if (this.config.passInModuleAddress) {
       lines.push("this.moduleAddress = AccountAddress.from(moduleAddress);");
@@ -354,7 +354,7 @@ export class CodeGenerator {
 
     if (noSignerArgEntryFunction) {
       lines.push(
-        `this.${PRIMARY_SENDER_VAR_NAME} = AccountAddress.from(${PRIMARY_SENDER_VAR_NAME});`,
+        `this.${PRIMARY_SENDER_VAR_NAME} = AccountAddress.from(${PRIMARY_SENDER_VAR_NAME});`
       );
     } else {
       lines.push(signerArguments.length >= 1 ? primarySenderAssignment : "");
@@ -366,7 +366,7 @@ export class CodeGenerator {
       const entryFunctionInputTypeConverter = transformEntryFunctionInputTypes(
         casedFieldNames[i],
         functionArguments[i].typeTagArray,
-        0,
+        0
       );
       lines.push(`${casedFieldNames[i]}: ${entryFunctionInputTypeConverter},`);
     });
@@ -375,13 +375,13 @@ export class CodeGenerator {
     if (genericTypeTagsString) {
       lines.push(
         "this.typeTags = typeTags.map(typeTag => typeof typeTag === 'string'" +
-          ` ? parseTypeTag(typeTag) : typeTag) as ${explicitTypeTags};`,
+          ` ? parseTypeTag(typeTag) : typeTag) as ${explicitTypeTags};`
       );
     }
     if (!viewFunction) {
       lines.push(
         `this.${FEE_PAYER_VAR_NAME} = (${FEE_PAYER_VAR_NAME} !== undefined)` +
-          ` ? AccountAddress.from(${FEE_PAYER_VAR_NAME}) : undefined;`,
+          ` ? AccountAddress.from(${FEE_PAYER_VAR_NAME}) : undefined;`
       );
     }
     // End of the constructor function.
@@ -398,8 +398,8 @@ export class CodeGenerator {
           genericTypeTags,
           noSignerArgEntryFunction,
           explicitTypeTagInputs,
-          genericTypeTagsStringAnnotation,
-        ),
+          genericTypeTagsStringAnnotation
+        )
       );
 
       lines.push(
@@ -412,8 +412,8 @@ export class CodeGenerator {
           genericTypeTags,
           noSignerArgEntryFunction,
           explicitTypeTagInputs,
-          genericTypeTagsStringAnnotation,
-        ),
+          genericTypeTagsStringAnnotation
+        )
       );
     } else {
       lines.push(
@@ -424,8 +424,8 @@ export class CodeGenerator {
           genericTypeTags,
           explicitTypeTagInputs,
           genericTypeTagsStringAnnotation,
-          returnTypes,
-        ),
+          returnTypes
+        )
       );
     }
     lines.push("\n } \n");
@@ -449,7 +449,7 @@ export class CodeGenerator {
     genericTypeTags: Array<string>,
     noSignerArgEntryFunction: boolean,
     explicitTypeTagInputs: string,
-    genericTypeTagAnnotation: string,
+    genericTypeTagAnnotation: string
   ) {
     const signerArguments = Array.from(inputSignerArguments);
 
@@ -467,7 +467,7 @@ export class CodeGenerator {
     const constructorOtherArgs = new Array<string>();
     signerArguments.forEach((signerArgument, i) => {
       constructorSenders.push(
-        `${signerArgumentNames[i]}: ${accountAddressInputString}, // ${signerArgument.annotation}`,
+        `${signerArgumentNames[i]}: ${accountAddressInputString}, // ${signerArgument.annotation}`
       );
     });
     functionArguments.forEach((functionArgument, i) => {
@@ -477,7 +477,7 @@ export class CodeGenerator {
     });
     constructorOtherArgs.push(
       `feePayer?: ${accountAddressInputString}, ` +
-        "// optional fee payer account to sponsor the transaction",
+        "// optional fee payer account to sponsor the transaction"
     );
 
     const withSecondarySenders = signerArguments.length > 1;
@@ -558,7 +558,7 @@ export class CodeGenerator {
     genericTypeTags: Array<string>,
     noSignerArgEntryFunction: boolean,
     explicitTypeTagInputs: string,
-    genericTypeTagAnnotation: string,
+    genericTypeTagAnnotation: string
   ) {
     const signerInputString = toInputTypeString([new TypeTagSigner()]);
     const signerArguments = Array.from(inputSignerArguments);
@@ -577,7 +577,7 @@ export class CodeGenerator {
     const constructorOtherArgs = new Array<string>();
     signerArguments.forEach((signerArgument, i) => {
       constructorSenders.push(
-        `${signerArgumentNames[i]}: ${signerInputString}, // ${signerArgument.annotation}`,
+        `${signerArgumentNames[i]}: ${signerInputString}, // ${signerArgument.annotation}`
       );
     });
     functionArguments.forEach((functionArgument, i) => {
@@ -587,7 +587,7 @@ export class CodeGenerator {
     });
     constructorOtherArgs.push(
       // TODO: Is this ever used?
-      `feePayer?: ${signerInputString}, // Optional fee payer account to sponsor the transaction`,
+      `feePayer?: ${signerInputString}, // Optional fee payer account to sponsor the transaction`
     );
 
     const withSecondarySenders = signerArguments.length > 1;
@@ -621,7 +621,7 @@ export class CodeGenerator {
         `...${CONSTRUCTOR_ARGS_VARIABLE_NAME},\n` +
         "feePayer: feePayer ? feePayer.accountAddress : undefined,\n" +
         `${primarySender}: primarySigner.accountAddress,\n${secondarySenders.map(
-          (s) => `${s}: ${s}.accountAddress`,
+          (s) => `${s}: ${s}.accountAddress`
         )}}\n`;
       destructuredArgs = `const {
         ${primarySender}: primarySigner,
@@ -683,7 +683,7 @@ export class CodeGenerator {
     genericTypeTags: Array<string>,
     explicitTypeTagInputs: string,
     genericTypeTagAnnotation: string,
-    returnTypes: Array<string>,
+    returnTypes: Array<string>
   ): string {
     const constructorFunctionArgs = new Array<string>();
 
@@ -727,7 +727,7 @@ export class CodeGenerator {
     }
 
     const transactionBuilderFunctionSignature =
-      `static async submit(${submitFunctionSignature}): Promise${returnTypesAsString} {\n` +
+      `static async view(${submitFunctionSignature}): Promise${returnTypesAsString} {\n` +
       `  const ${resTuple} = ${awaitNewClassAndSubmit};\n` +
       "  return res;\n" +
       "}\n";
@@ -737,7 +737,7 @@ export class CodeGenerator {
 
   getClassArgTypes(
     typeTags: Array<TypeTag>,
-    genericTypeParams: Array<MoveFunctionGenericTypeParam>,
+    genericTypeParams: Array<MoveFunctionGenericTypeParam>
   ): EntryFunctionArgumentSignature {
     const signerArguments = new Array<AnnotatedBCSArgument>();
     const functionArguments = new Array<AnnotatedBCSArgument>();
@@ -816,8 +816,11 @@ export class CodeGenerator {
     aptos: Aptos,
     accountAddress: AccountAddress,
     sourceCodePath?: string,
+    onlyModuleName?: string
   ): Promise<ABIGeneratedCodeMap> {
-    const moduleABIs = await fetchModuleABIs(aptos, accountAddress);
+    const moduleABIs = await fetchModuleABIs(aptos, accountAddress).then((r) =>
+      r.filter((v) => v.abi?.name === onlyModuleName)
+    );
     if (moduleABIs.length === 0) {
       console.warn(`No ABIs found for ${accountAddress.toString()}.`);
       return {};
@@ -825,7 +828,7 @@ export class CodeGenerator {
     const sourceCodeMap = await getSourceCodeMap(
       accountAddress,
       aptos.config.network,
-      sourceCodePath,
+      sourceCodePath
     );
 
     const abiFunctions: AbiFunctions[] = [];
@@ -838,10 +841,10 @@ export class CodeGenerator {
         const sourceCode = sourceCodeMap[abi.name];
 
         const publicEntryFunctions = exposedFunctions.filter(
-          (func) => func.is_entry && func.visibility !== "private",
+          (func) => func.is_entry && func.visibility !== "private"
         );
         const privateEntryFunctions = exposedFunctions.filter(
-          (func) => func.is_entry && func.visibility === "private",
+          (func) => func.is_entry && func.visibility === "private"
         );
         const viewFunctions = exposedFunctions.filter((func) => func.is_view);
 
@@ -855,12 +858,12 @@ export class CodeGenerator {
           publicEntryFunctions: getMoveFunctionsWithArgumentNames(
             abi,
             publicEntryFunctions,
-            publicMapping,
+            publicMapping
           ),
           privateEntryFunctions: getMoveFunctionsWithArgumentNames(
             abi,
             privateEntryFunctions,
-            privateMapping,
+            privateMapping
           ),
           viewFunctions: getMoveFunctionsWithArgumentNames(abi, viewFunctions, viewMapping),
         };
@@ -884,15 +887,15 @@ export class CodeGenerator {
                     if (param.startsWith("&mut ")) {
                       console.warn(
                         `${lightRed("Removing")} deprecated &mut in typetag ${lightMagenta(
-                          param,
-                        )} in function ${lightGray(func.name)}`,
+                          param
+                        )} in function ${lightGray(func.name)}`
                       );
                       return param.replace("&mut ", "");
                     }
                     return param;
                   });
                   const typeTags = func.params.map((param) =>
-                    parseTypeTag(param, { allowGenerics: true }),
+                    parseTypeTag(param, { allowGenerics: true })
                   );
                   if (
                     typeTags.find(
@@ -900,13 +903,13 @@ export class CodeGenerator {
                         typeTag.isStruct() &&
                         !typeTag.isObject() &&
                         !typeTag.isString() &&
-                        !typeTag.isOption(),
+                        !typeTag.isOption()
                     )
                   ) {
                     console.warn(
                       `${lightRed("Ignoring")} function ${lightGray(
-                        func.name,
-                      )} because it has a deprecated struct type tag`,
+                        func.name
+                      )} because it has a deprecated struct type tag`
                     );
                     return "";
                   }
@@ -934,17 +937,17 @@ export class CodeGenerator {
                   if (f.params.find((param) => param.startsWith("&0x"))) {
                     console.warn(
                       `${lightRed("Ignoring")} function ${lightGray(
-                        f.name,
+                        f.name
                       )} because it has a deprecated parameter ${lightMagenta(
-                        f.params.find((param) => param.startsWith("&0x"))!,
-                      )}`,
+                        f.params.find((param) => param.startsWith("&0x"))!
+                      )}`
                     );
                   } else {
                     console.error(e);
                   }
                   return "";
                 }
-              }),
+              })
             );
           }
         });
@@ -976,7 +979,7 @@ export class CodeGenerator {
             code,
           };
         }
-      }),
+      })
     );
 
     return generatedCode;
@@ -984,7 +987,7 @@ export class CodeGenerator {
 
   async generateCodeForModules(
     aptos: Aptos,
-    moduleAddressesAndSourceCodePath: Array<AccountAddress>,
+    moduleAddressesAndSourceCodePath: Array<AccountAddress>
   ): Promise<void> {
     const baseDirectory = this.config.outputPath ?? ".";
     if (!fs.existsSync(baseDirectory)) {
@@ -997,7 +1000,12 @@ export class CodeGenerator {
         const sourceCodePath = addressInSourcePath
           ? this.config.sourceCodePath[address.toString()]
           : undefined;
-        const generatedCode = await this.fetchABIs(aptos, address, sourceCodePath);
+        const generatedCode = await this.fetchABIs(
+          aptos,
+          address,
+          sourceCodePath,
+          this.config.namedAddresses[address.toString()]
+        );
         const namedAddresses = this.config.namedAddresses ?? {};
         const addressString = address.toString();
         const namedAddress =
@@ -1021,7 +1029,7 @@ export class CodeGenerator {
           `${lightGreen("[SUCCESS]:")} Generated code for ` +
             `${lightBlue(numEntryFunctions)} entry functions and ` +
             `${lightBlue(numViewFunctions)} view functions`,
-          `over ${lightBlue(numTotalModules)} modules for ${lightGray(namedAddress)}`,
+          `over ${lightBlue(numTotalModules)} modules for ${lightGray(namedAddress)}`
         );
 
         this.writeGeneratedCodeToFiles(namedAddress, baseDirectory, generatedCode);
@@ -1044,18 +1052,18 @@ export class CodeGenerator {
         } else {
           fs.writeFileSync(filePath, generatedIndexFile.join("\n"));
         }
-      }),
+      })
     );
     // Copy boilerplate files like the payload builder and types.ts
     copyCode(
       `./src/${FOR_GENERATION_DIRECTORY}/${PAYLOAD_BUILDERS_FILE_NAME}.ts`,
       `${baseDirectory}${PAYLOAD_BUILDERS_FILE_NAME}.ts`,
-      this.config.sdkPath,
+      this.config.sdkPath
     );
     copyCode(
       `./src/${FOR_GENERATION_DIRECTORY}/${ABI_TYPES_FILE_NAME}.ts`,
       `${baseDirectory}${ABI_TYPES_FILE_NAME}.ts`,
-      this.config.sdkPath,
+      this.config.sdkPath
     );
   }
 
@@ -1063,7 +1071,7 @@ export class CodeGenerator {
     namedAddress: string,
     baseDirectory: string,
     codeMap: ABIGeneratedCodeMap,
-    skipEmptyModules = true,
+    skipEmptyModules = true
   ) {
     const perAddressIndexFile: Array<string> = [];
 
@@ -1087,8 +1095,8 @@ export class CodeGenerator {
       fs.mkdirSync(path.dirname(constsPath), { recursive: true });
       fs.writeFileSync(
         constsPath,
-        "import { AccountAddress } from \"@aptos-labs/ts-sdk\";\n" +
-          `export const ${MODULE_ADDRESS_VAR_NAME} = AccountAddress.from("${address}");\n`,
+        'import { AccountAddress } from "@aptos-labs/ts-sdk";\n' +
+          `export const ${MODULE_ADDRESS_VAR_NAME} = AccountAddress.from("${address}");\n`
       );
 
       const prettyAndLintedCode = await lintAndFormat({
