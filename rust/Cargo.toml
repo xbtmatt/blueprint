@@ -7,18 +7,32 @@ edition = "2021"
 incremental = true
 
 [dependencies]
-aptos = { git = "https://github.com/aptos-labs/aptos-core.git", tag = "aptos-cli-v6.1.1", subpath = "crates/aptos" }
-aptos-types = { git = "https://github.com/aptos-labs/aptos-core.git", tag = "aptos-cli-v6.1.1", subpath = "crates/aptos-types" }
-move-binary-format = { git = "https://github.com/aptos-labs/aptos-core.git", tag = "aptos-cli-v6.1.1", subpath = "third_party/move/move-binary-format" }
-move-core-types = { git = "https://github.com/aptos-labs/aptos-core.git", tag = "aptos-cli-v6.1.1", subpath = "third_party/move/move-core/types" }
-move-bytecode-utils = { git = "https://github.com/aptos-labs/aptos-core.git", tag = "aptos-cli-v6.1.1", subpath = "third_party/tools/move-bytecode-utils" }
-move-resource-viewer = { git = "https://github.com/aptos-labs/aptos-core.git", tag = "aptos-cli-v6.1.1", subpath = "third_party/tools/move-resource-viewer" }
+aptos = { path = "../../aptos-core/crates/aptos" }
+aptos-framework = { path = "../../aptos-core/aptos-move/framework" }
+aptos-rest-client = { path = "../../aptos-core/crates/aptos-rest-client" }
+aptos-types = { path = "../../aptos-core/types" }
+move-binary-format = { path = "../../aptos-core/third_party/move/move-binary-format" }
+move-core-types = { path = "../../aptos-core/third_party/move/move-core/types" }
+move-model = { path = "../../aptos-core/third_party/move/move-model" }
+move-decompiler = { path = "../../aptos-core/third_party/move/tools/move-decompiler" }
+move-bytecode-utils = { path = "../../aptos-core/third_party/move/tools/move-bytecode-utils" }
+move-resource-viewer = { path = "../../aptos-core/third_party/move/tools/move-resource-viewer" }
+codespan = "0.11.1"
+codespan-reporting = { version = "0.11.1", features = ["serde", "serialization"] }
 anyhow = "1.0"
 petgraph = "0.6"
 hex = "0.4"
+futures = "0.3.29"
+futures-channel = "0.3.29"
+futures-core = "0.3.29"
+futures-util = "0.3.29"
 poem = { version = "3.1.3", features = ["anyhow", "compression", "rustls"] }
 poem-openapi = { version = "5.1.2", features = ["swagger-ui", "url"] }
 poem-openapi-derive = "5.1.1"
+serde_json = { version = "1.0.81", features = [
+    "preserve_order",
+    "arbitrary_precision",
+] } # Note: arbitrary_precision is required to parse u256 in JSO
 tokio = { version = "1.35.1", features = ["full"] }
 tokio-io-timeout = "1.2.0"
 tokio-retry = "0.3.0"

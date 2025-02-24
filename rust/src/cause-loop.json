@@ -1,0 +1,104 @@
+{
+  "packages": [
+    {
+      "deps": [
+        {
+          "account": "0x1",
+          "package_name": "AptosFramework"
+        },
+        {
+          "account": "0x1",
+          "package_name": "AptosStdlib"
+        },
+        {
+          "account": "0x1",
+          "package_name": "MoveStdlib"
+        },
+        {
+          "account": "0x4",
+          "package_name": "AptosTokenObjects"
+        },
+        {
+          "account": "0x2ea773209c18e7be4acc1ac68de1ad1ea16df0070ce60858283792719ed002",
+          "package_name": "Wrapper"
+        },
+        {
+          "account": "0xf000d910b99722d201c6cf88eb7d1112b43475b9765b118f289b5d65d919000d",
+          "package_name": "Arguments"
+        }
+      ],
+      "extension": {
+        "vec": []
+      },
+      "manifest": "0x1f8b08000000000002ffbd523b6f852014def915865da449a72677b869d2b54b930ec61884a3d7aa40001f49d3ff5e5034b6bd73c3c239e77bf1c835e31d6ba040920d905c12fc6e98d6609e95b4e30006a3098c6d950c334afcc208e50234480192b760c9553b655f8ce7cfca74056a5a17c037e7b47dca325fdec68a7035642c20d39e55366eb932403c00230353200dac95127c6dc74ab426b436e4a026c8eadd24d28ffa7ea637d5817cad3e803bfb9fb15cf04dd566fc3b5a81aea6f1372b9df5329f49af38eb83202119db2738f942f121fe80e6ad1f2028674218b036c8aedee591657dafe501c7fe9aa98c99b6d9a39f9da2e012a3f9f03c55258f7f21b6c379a6f4ecbcab5cbcaaa0b4fe2144979a52715f8d2eace2023ce11b8478949189020000",
+      "modules": [
+        {
+          "extension": {
+            "vec": []
+          },
+          "name": "main",
+          "source": "0x1f8b08000000000002ff6d90c10e83200c86ef3e45935d34e109d871c9ae3beeb02cc661cd481408886631bcfb40515c660f84b63ffc5fdbc9dab608a3ae94425d32298ced5053da555cc094810f6b3601a55220a513d358f558fa84c04da03bff0b1b3eec94ab41a812b82fd9d527f1e97c985e5bd6c32542c0bb32c0a4fa10a8b554c4f7a5c6081522b0047bb25566d3fdf74bcb258fd363e0383ee7bbb2af963368ac8088b9ce9f17346124c383d2c691569217e4a7bd401d2c622f7411d465d917e5240ae894010000",
+          "source_map": "0x"
+        }
+      ],
+      "name": "WrapperConsumer",
+      "source_digest": "F79E7B1181BA560AC4D4561CA620D617DA9B1D11AF47027376605599223DCA8E",
+      "upgrade_number": "2",
+      "upgrade_policy": {
+        "policy": 1
+      }
+    },
+    {
+      "deps": [
+        {
+          "account": "0x1",
+          "package_name": "AptosFramework"
+        },
+        {
+          "account": "0x1",
+          "package_name": "AptosStdlib"
+        },
+        {
+          "account": "0x1",
+          "package_name": "MoveStdlib"
+        },
+        {
+          "account": "0x4",
+          "package_name": "AptosTokenObjects"
+        },
+        {
+          "account": "0x2ea773209c18e7be4acc1ac68de1ad1ea16df0070ce60858283792719ed002",
+          "package_name": "Wrapper"
+        },
+        {
+          "account": "0x3177667df1e91bd7fdc9e279574576e174f6c8bfcfdde7c26a18c9637ec003",
+          "package_name": "WrapperConsumer"
+        },
+        {
+          "account": "0xf000d910b99722d201c6cf88eb7d1112b43475b9765b118f289b5d65d919000d",
+          "package_name": "Arguments"
+        }
+      ],
+      "extension": {
+        "vec": []
+      },
+      "manifest": "0x1f8b08000000000002ffbd524d4f853010bcf75790de1fd4c493c93bbc9878d544130f8490d22e3c045ad2968fc4f8df6d694154bc1a2eececccce6cdbb4a7aca1156448d00ea273849f8149c19f3c8cd1084ad752b80e89ed87114a39f420380856838e2fbd91fa4159f5245593a1aa368e7c35a6d7774962cbeb50c44c760975cc534b0b1d7e9954105b02460a4627ea682d04d85a0f05af95833cb3932324e56a12e45b7d9ce94536201e8b376046ff672ce37c4fd21bff8c96a18baa860e84d176cc7bd44a465b37308e13ba7670f4815e15ed7b50bf4893c777947b29b4d5fd49b5fb7882d3a09472ae406b1765c99b6ff9973b9e6f70c0973df2b087efdddade2e3ece319ab69cbb2a675f991cac97379587b716407730e3691f671d7db6569c90f2db74329784f0630b32d38271288f9cac0e382b28469f7f6f01f7ec020000",
+      "modules": [
+        {
+          "extension": {
+            "vec": []
+          },
+          "name": "main2",
+          "source": "0x1f8b08000000000002ff6d514b6b843010befb2b067a514857f0688f42a1a75e0a3d9422d9645c43350979ac2c8bffbdc9eaaafb984398f9e6f5cd973c870fc93acf115c8b60691f1d210f16a885c150add1bc3225adefd110d87b074202052e9a060d4a079ab23f7ac05d92e7f0d55207033dc180c0a8040c7d0681a346c9513281616e000c5ad51d91c3205cabc2cc4e291db6c6194236420a87dd6997f48afb2ed0c2c080d7f3a6b2eca990059c1308e62d5e7996a592217b6606a9c33a04043e258e6f8f858d386e2a67b88e2881ef297a0fc1636b7dd56262b1ceb8e25137c60a02d506a88a79d2e5b1ce78e6d68236b6287d22c08dd224e455d0683a2f5abc2a1e4216e4427f4b744a8deb8e979fa3c0e1f7e26bbfef0483c64bb8239b6625a4d5f2bb55916dd6a68b176d617bbe81177eabe869461e4a26c24fe4be2f1e6fc3a0649a2d48365f3926c93f0c99c6a6b9020000",
+          "source_map": "0x"
+        }
+      ],
+      "name": "SecondPackage",
+      "source_digest": "732135A2CEADA43ABE17C29777401240C3E7E4F75957AFB320C956D4FEFB1153",
+      "upgrade_number": "1",
+      "upgrade_policy": {
+        "policy": 1
+      }
+    }
+  ]
+}

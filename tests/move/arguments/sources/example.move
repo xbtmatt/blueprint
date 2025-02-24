@@ -1,5 +1,5 @@
 module arguments::example {
-    use std::string::{String};
+    use std::string::{Self, String};
     use aptos_framework::object::{Self, Object, ExtendRef};
     use std::signer;
 
@@ -7,7 +7,7 @@ module arguments::example {
     const E_NOT_DEPLOYER: u64 = 0;
 
     #[resource_group_member(group = aptos_framework::object::ObjectGroup)]
-    struct SomeResource<V1: copy + drop + store, V2: copy + drop + store, V3: copy + drop + store> has key, store {
+    struct SomeResource<V1: copy + drop + store, V2: copy + drop + store, V3: copy + drop + store> has key, copy, drop, store {
         my_bool: bool,
         my_u64: u64,
         my_string: String,
@@ -103,5 +103,21 @@ module arguments::example {
             some_resource.value_2,
             some_resource.value_3,
         )
+    }
+    
+    #[view]
+    public fun create_some_resource<V1: copy + drop + store, V2: copy + drop + store, V3: copy + drop + store>(
+        v1: V1,
+        v2: V2,
+        v3: V3,
+    ): SomeResource<V1, V2, V3> {
+        SomeResource {
+            my_bool: true,
+            my_u64: 1,
+            my_string: string::utf8(b"some resource string"),
+            value_1: v1,
+            value_2: v2,
+            value_3: v3,
+        }
     }
 }

@@ -1,5 +1,5 @@
 [package]
-name = "Wrapper"
+name = "SecondPackage"
 version = "0.0.0"
 
 [dependencies.AptosFramework]
@@ -14,13 +14,19 @@ subdir = "aptos-move/framework/aptos-token-objects"
 
 [dependencies]
 Arguments = { local = "../arguments" }
+Wrapper = { local = "../wrapper" }
+WrapperConsumer = { local = "../wrapper-consumer" }
 
 [addresses]
 aptos_framework = "0x1"
 aptos_token_objects = "0x4"
 arguments = "_"
 wrapper = "_"
+wrapper_consumer = "_"
+second_package = "_"
 
 [dev-addresses]
-arguments ="0xd00f"
+arguments="0xd00f"
 wrapper = "0xf00d"
+wrapper_consumer = "0xabcdef"
+second_package = "0xfedcba"

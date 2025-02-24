@@ -382,7 +382,7 @@ module arguments::tx_args_module {
 
     public inline fun assert_vectors_equal<T: drop>(vec_1: vector<T>, vec_2: vector<T>, arg_index: u64) {
         assert!(vector::length<T>(&vec_1) == vector::length<T>(&vec_2), error::invalid_state(INCORRECT_VECTOR_LENGTH + arg_index));
-        vector::zip<T, T>(vec_1, vec_2, |a, b| {
+        vector::zip_ref<T, T>(&vec_1, &vec_2, |a, b| {
             assert!(a == b, error::invalid_state(arg_index));
         });
     }
