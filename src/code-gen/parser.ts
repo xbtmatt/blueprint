@@ -715,7 +715,7 @@ export class CodeGenerator {
       submitFunctionArgs = submitFunctionArgsWithConfig;
     }
     const [a, b, c] = [className, submitConstructorArgs, submitFunctionArgs];
-    const awaitNewClassAndSubmit = `await new ${a}(${b}).submit(${c})`;
+    const awaitNewClassAndSubmit = `await new ${a}(${b}).view(${c})`;
 
     // Automatically unpack the return type if there's only one, otherwise return it as a tuple.
     const resTuple = returnTypes.length === 1 ? "[ res ]" : "res";

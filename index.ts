@@ -40,10 +40,11 @@ async function main() {
       // AccountAddress.FOUR,
       // AccountAddress.from("0x4bab58978ec1b1bef032eeb285ad47a6a9b997d646c19b598c35f46b26ff9ece"),
       // AccountAddress.from("0xf000d910b99722d201c6cf88eb7d1112b43475b9765b118f289b5d65d919000d"),
-      AccountAddress.from("0x2222e4c4788e34e21bacad364855f5e648c19f4643f20f22f507334d041c2222"),
+      // AccountAddress.from("0x2222e4c4788e34e21bacad364855f5e648c19f4643f20f22f507334d041c2222"),
+      AccountAddress.from("0x111f39f15da7e418cbb2188666eedd8e9bade9dae11cf949b0736c848025c111"),
     ],
     "",
-    "testnet",
+    "local",
   ]);
   const selections = await userInputs();
   const codeGeneratorConfig = getCodeGenConfig(selections.configPath);

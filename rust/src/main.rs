@@ -51,8 +51,9 @@ async fn main() -> Result<(), Error> {
     let url = Url::parse("http://localhost:8080/v1/").unwrap();
     // let address_str = "0xface729284ae5729100b3a9ad7f7cc025ea09739cd6e7252aff0beb53619cafe";
     // let address_str = "0xbabe32dbe1cb44c30363894da9f49957d6e2b94a06f2fc5c20a9d1b9e54cface";
+    let address_str = "0xf000d910b99722d201c6cf88eb7d1112b43475b9765b118f289b5d65d919000d";
 
-    let address = AccountAddress::from_hex_literal(_wrapper).unwrap();
+    let address = AccountAddress::from_hex_literal(wrapper_consumer).unwrap();
     let (_, bytecodes) = get_package_registry(url.clone(), address, true).await?;
 
     options
@@ -66,11 +67,17 @@ async fn main() -> Result<(), Error> {
         .map(|bc| CompiledModule::deserialize(bc).unwrap())
         .collect::<Vec<_>>();
 
+    // First pass for the deps.
     for module in compiled_modules.clone() {
         let name = module.self_name().to_string();
+        log!(name);
         module_map.entry(name).or_insert(module);
     }
 
+    // Get immediate dependencies- the decompiler can figure it out after this.
+    // WRONG: With `wrapper_consumer` it fails because of nested dependencies.
+    // You need to exhaustively search it somehow, I believe.
+    // Check out victor's compute_dependency_size function or whatever it is
     for module in compiled_modules.clone() {
         for ele in module.immediate_dependencies() {
             let (_, bytecodes) = get_package_registry(url.clone(), ele.address, true).await?;
@@ -95,9 +102,9 @@ async fn main() -> Result<(), Error> {
         .unwrap()
         .collect::<Vec<_>>();
 
-    // graph.compute_topological_order().unwrap().for_each(|v| {
-    //     log!(v.name().as_str());
-    // });
+    graph.compute_topological_order().unwrap().for_each(|v| {
+        log!(v.name().as_str());
+    });
 
     let mut decompiler = Decompiler::new(Default::default());
 

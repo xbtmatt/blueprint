@@ -36,7 +36,7 @@ export class EntryFunctionTransactionBuilder {
   constructor(
     payloadBuilder: EntryFunctionPayloadBuilder,
     aptos: Aptos,
-    rawTransactionInput: AnyRawTransaction,
+    rawTransactionInput: AnyRawTransaction
   ) {
     this.payloadBuilder = payloadBuilder;
     this.aptos = aptos;
@@ -51,7 +51,7 @@ export class EntryFunctionTransactionBuilder {
    */
   async sign(
     signer: Account | WalletSignTransactionFunction,
-    asFeePayer?: boolean,
+    asFeePayer?: boolean
   ): Promise<AccountAuthenticator> {
     /* eslint-disable-next-line no-prototype-builtins */
     if (signer.hasOwnProperty("privateKey") || signer instanceof Account) {
@@ -130,7 +130,7 @@ export class EntryFunctionTransactionBuilder {
   /* eslint-disable-next-line class-methods-use-this */ // This is intended to be chained.
   responseInfo(
     response: UserTransactionResponse,
-    optionsArray?: Array<keyof UserTransactionResponse>,
+    optionsArray?: Array<keyof UserTransactionResponse>
   ) {
     const payload = response.payload as EntryFunctionPayloadResponse;
 
@@ -170,17 +170,17 @@ export abstract class EntryFunctionPayloadBuilder extends Serializable {
   public abstract readonly feePayer?: AccountAddress;
 
   createPayload(
-    multisigAddress?: AccountAddress,
+    multisigAddress?: AccountAddress
   ): TransactionPayloadEntryFunction | TransactionPayloadMultiSig {
     const entryFunction = EntryFunction.build(
       `${this.moduleAddress.toString()}::${this.moduleName}`,
       this.functionName,
       this.typeTags,
-      this.argsToArray(),
+      this.argsToArray()
     );
     if (multisigAddress) {
       return new TransactionPayloadMultiSig(
-        new MultiSig(multisigAddress, new MultiSigTransactionPayload(entryFunction)),
+        new MultiSig(multisigAddress, new MultiSigTransactionPayload(entryFunction))
       );
     }
     return new TransactionPayloadEntryFunction(entryFunction);
@@ -210,18 +210,18 @@ export abstract class ViewFunctionPayloadBuilder<T extends Array<MoveValue>> {
     return {
       function: `${this.moduleAddress.toString()}::${this.moduleName}::${this.functionName}`,
       typeArguments: this.typeTags.map(
-        (type) => type.toString() as `0x${string}::${string}::${string}`,
+        (type) => type.toString() as `0x${string}::${string}::${string}`
       ),
       functionArguments: this.argsToArray(),
     };
   }
 
-  async submit(args: { aptos: Aptos | AptosConfig; options?: LedgerVersionArg }): Promise<T> {
+  async view(args: { aptos: Aptos | AptosConfig; options?: LedgerVersionArg }): Promise<T> {
     const entryFunction = EntryFunction.build(
       `${this.moduleAddress.toString()}::${this.moduleName}`,
       this.functionName,
       this.typeTags,
-      this.argsToArray(),
+      this.argsToArray()
     );
     const { aptos, options } = args;
     const viewRequest = await postBCSViewFunction<T>({

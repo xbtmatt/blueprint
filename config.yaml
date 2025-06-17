@@ -9,12 +9,14 @@ namedAddresses:
   "0xc0deb00c405f84c85dc13442e305df75d1288100cdd82675695f6148c7ece51c": econia
   "0xf000d910b99722d201c6cf88eb7d1112b43475b9765b118f289b5d65d919000d": emojicoin_dot_fun_market_metadata
   "0x2222e4c4788e34e21bacad364855f5e648c19f4643f20f22f507334d041c2222": emojicoin_arena
+  "111f39f15da7e418cbb2188666eedd8e9bade9dae11cf949b0736c848025c111": emojicoin_dot_fun_favorites
 sourceCodePath:
   "0xf000d910b99722d201c6cf88eb7d1112b43475b9765b118f289b5d65d919000d": "/home/dev/zemoji/src/move/market_metadata/sources"
   "0x2222e4c4788e34e21bacad364855f5e648c19f4643f20f22f507334d041c2222": "/home/dev/zemoji/src/move/emojicoin_arena/sources"
   "0x1": "/home/dev/aptos/aptos-core-1/aptos-move/framework/aptos_framework/sources/"
   "0x3": "/home/dev/aptos/aptos-core-1/aptos-move/framework/aptos_token/sources/"
   "0x4": "/home/dev/aptos/aptos-core-1/aptos-move/framework/aptos_token_objects/sources/"
+  "111f39f15da7e418cbb2188666eedd8e9bade9dae11cf949b0736c848025c111": "/home/dev/zemoji/src/move/favorites"
 namedTypeTags:
   "0x4::token::Token": "Token"
   "0x4::collection::Collection": "Collection"
